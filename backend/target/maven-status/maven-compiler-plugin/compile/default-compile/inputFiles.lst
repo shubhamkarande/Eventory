@@ -1,0 +1,15 @@
+C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\model\EventCategory.java
+C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\repository\VenueRepository.java
+C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\repository\RSVPRepository.java
+C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\util\QRCodeGenerator.java
+C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\model\Venue.java
+C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\EventoryBackendApplication.java
+C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\model\RSVP.java
+C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\config\DataInitializer.java
+C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\dto\EventsResponse.java
+C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\repository\EventCategoryRepository.java
+C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\controller\EventController.java
+C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\model\Event.java
+C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\dto\RSVPRequest.java
+C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\service\EventService.java
+C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\repository\EventRepository.java
