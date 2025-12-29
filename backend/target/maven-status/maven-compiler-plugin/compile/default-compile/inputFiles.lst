@@ -1,15 +1,24 @@
-C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\model\EventCategory.java
-C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\repository\VenueRepository.java
-C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\repository\RSVPRepository.java
-C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\util\QRCodeGenerator.java
-C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\model\Venue.java
-C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\EventoryBackendApplication.java
-C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\model\RSVP.java
-C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\config\DataInitializer.java
-C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\dto\EventsResponse.java
-C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\repository\EventCategoryRepository.java
-C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\controller\EventController.java
-C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\model\Event.java
-C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\dto\RSVPRequest.java
-C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\service\EventService.java
-C:\My Projects\App Development\Eventory\backend\src\main\java\com\eventory\repository\EventRepository.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\repository\UserRepository.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\EventoryApplication.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\controller\RsvpController.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\dto\RsvpResponse.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\model\User.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\dto\LoginRequest.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\model\Event.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\service\EventService.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\service\RsvpService.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\dto\CreateEventRequest.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\controller\AuthController.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\security\JwtAuthenticationFilter.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\model\Rsvp.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\config\SecurityConfig.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\dto\RegisterRequest.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\security\JwtService.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\dto\EventResponse.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\service\AuthService.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\controller\EventController.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\repository\EventRepository.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\exception\GlobalExceptionHandler.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\security\CustomUserDetailsService.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\dto\AuthResponse.java
+C:\MyProjects\MobileAppDevelopment\Eventory\backend\src\main\java\com\eventory\repository\RsvpRepository.java

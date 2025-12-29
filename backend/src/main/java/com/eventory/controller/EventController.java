@@ -1,76 +1,72 @@
 package com.eventory.controller;
 
-import com.eventory.dto.EventsResponse;
-import com.eventory.dto.RSVPRequest;
-import com.eventory.model.Event;
-import com.eventory.model.EventCategory;
-import com.eventory.model.RSVP;
+import com.eventory.dto.CreateEventRequest;
+import com.eventory.dto.EventResponse;
 import com.eventory.service.EventService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/events")
+@RequiredArgsConstructor
 public class EventController {
-    
-    @Autowired
-    private EventService eventService;
-    
-    @GetMapping("/events")
-    public ResponseEntity<EventsResponse> getEvents(
-            @RequestParam double latitude,
-            @RequestParam double longitude,
-            @RequestParam(defaultValue = "50") int radius,
-            @RequestParam(required = false) String category,
-            @RequestParam(required = false) String startDate,
-            @RequestParam(required = false) String endDate,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size) {
-        
-        Pageable pageable = PageRequest.of(page, size);
-        EventsResponse response = eventService.getEvents(
-            latitude, longitude, radius, category, startDate, endDate, pageable);
-        return ResponseEntity.ok(response);
+
+    private final EventService eventService;
+
+    @GetMapping
+    public ResponseEntity<List<EventResponse>> getEvents(
+            @RequestParam(required = false) Double lat,
+            @RequestParam(required = false) Double lng,
+            @RequestParam(required = false, defaultValue = "50") Double radius,
+            @RequestParam(required = false) String category) {
+
+        if (lat != null && lng != null) {
+            return ResponseEntity.ok(eventService.getEventsNearby(lat, lng, radius, category));
+        } else if (category != null && !category.isEmpty()) {
+            return ResponseEntity.ok(eventService.getEventsByCategory(category));
+        } else {
+            return ResponseEntity.ok(eventService.getUpcomingEvents());
+        }
     }
-    
-    @GetMapping("/events/{eventId}")
-    public ResponseEntity<Event> getEventDetails(@PathVariable String eventId) {
-        Event event = eventService.getEventById(eventId);
-        return ResponseEntity.ok(event);
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EventResponse> getEvent(@PathVariable UUID id) {
+        return ResponseEntity.ok(eventService.getEventById(id));
     }
-    
-    @PostMapping("/events/{eventId}/rsvp")
-    public ResponseEntity<RSVP> rsvpToEvent(
-            @PathVariable String eventId,
-            @Valid @RequestBody RSVPRequest rsvpRequest) {
-        RSVP rsvp = eventService.rsvpToEvent(eventId, rsvpRequest);
-        return ResponseEntity.ok(rsvp);
+
+    @PostMapping
+    public ResponseEntity<EventResponse> createEvent(
+            @Valid @RequestBody CreateEventRequest request,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(eventService.createEvent(request, userDetails.getUsername()));
     }
-    
-    @DeleteMapping("/events/{eventId}/rsvp")
-    public ResponseEntity<Void> cancelRSVP(
-            @PathVariable String eventId,
-            @RequestParam String userId) {
-        eventService.cancelRSVP(eventId, userId);
-        return ResponseEntity.ok().build();
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EventResponse> updateEvent(
+            @PathVariable UUID id,
+            @Valid @RequestBody CreateEventRequest request,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(eventService.updateEvent(id, request, userDetails.getUsername()));
     }
-    
-    @GetMapping("/user/rsvps")
-    public ResponseEntity<List<RSVP>> getUserRSVPs(@RequestParam String userId) {
-        List<RSVP> rsvps = eventService.getUserRSVPs(userId);
-        return ResponseEntity.ok(rsvps);
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEvent(
+            @PathVariable UUID id,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        eventService.deleteEvent(id, userDetails.getUsername());
+        return ResponseEntity.noContent().build();
     }
-    
-    @GetMapping("/categories")
-    public ResponseEntity<List<EventCategory>> getEventCategories() {
-        List<EventCategory> categories = eventService.getAllCategories();
-        return ResponseEntity.ok(categories);
+
+    @GetMapping("/organizer")
+    public ResponseEntity<List<EventResponse>> getOrganizerEvents(
+            @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(eventService.getOrganizerEvents(userDetails.getUsername()));
     }
 }

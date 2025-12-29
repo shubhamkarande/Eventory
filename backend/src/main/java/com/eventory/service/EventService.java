@@ -1,136 +1,131 @@
 package com.eventory.service;
 
-import com.eventory.dto.EventsResponse;
-import com.eventory.dto.RSVPRequest;
+import com.eventory.dto.CreateEventRequest;
+import com.eventory.dto.EventResponse;
 import com.eventory.model.Event;
-import com.eventory.model.EventCategory;
-import com.eventory.model.RSVP;
-import com.eventory.model.RSVPStatus;
-import com.eventory.repository.EventCategoryRepository;
+import com.eventory.model.User;
 import com.eventory.repository.EventRepository;
-import com.eventory.repository.RSVPRepository;
-import com.eventory.util.QRCodeGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.eventory.repository.RsvpRepository;
+import com.eventory.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
-@Transactional
+@RequiredArgsConstructor
 public class EventService {
-    
-    @Autowired
-    private EventRepository eventRepository;
-    
-    @Autowired
-    private RSVPRepository rsvpRepository;
-    
-    @Autowired
-    private EventCategoryRepository categoryRepository;
-    
-    @Autowired
-    private QRCodeGenerator qrCodeGenerator;
-    
-    public EventsResponse getEvents(double latitude, double longitude, int radius,
-                                  String category, String startDate, String endDate,
-                                  Pageable pageable) {
-        
-        LocalDateTime start = null;
-        LocalDateTime end = null;
-        
-        if (startDate != null) {
-            start = LocalDateTime.parse(startDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        }
-        if (endDate != null) {
-            end = LocalDateTime.parse(endDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        }
-        
-        Page<Event> eventPage;
-        
-        if (category != null) {
-            eventPage = eventRepository.findEventsByLocationAndCategory(
-                latitude, longitude, radius, category, start, end, pageable);
+
+    private final EventRepository eventRepository;
+    private final UserRepository userRepository;
+    private final RsvpRepository rsvpRepository;
+
+    public List<EventResponse> getUpcomingEvents() {
+        return eventRepository.findUpcomingEvents(LocalDateTime.now()).stream()
+                .map(event -> EventResponse.fromEvent(event, rsvpRepository.countByEventId(event.getId())))
+                .collect(Collectors.toList());
+    }
+
+    public List<EventResponse> getEventsByCategory(String category) {
+        return eventRepository.findUpcomingEventsByCategory(category, LocalDateTime.now()).stream()
+                .map(event -> EventResponse.fromEvent(event, rsvpRepository.countByEventId(event.getId())))
+                .collect(Collectors.toList());
+    }
+
+    public List<EventResponse> getEventsNearby(Double lat, Double lng, Double radiusKm, String category) {
+        List<Event> events;
+        if (category != null && !category.isEmpty()) {
+            events = eventRepository.findEventsWithinRadiusByCategory(lat, lng, radiusKm, category,
+                    LocalDateTime.now());
         } else {
-            eventPage = eventRepository.findEventsByLocation(
-                latitude, longitude, radius, start, end, pageable);
+            events = eventRepository.findEventsWithinRadius(lat, lng, radiusKm, LocalDateTime.now());
         }
-        
-        return new EventsResponse(
-            eventPage.getContent(),
-            eventPage.getTotalElements(),
-            eventPage.getTotalPages(),
-            eventPage.getNumber(),
-            eventPage.hasNext()
-        );
+        return events.stream()
+                .map(event -> EventResponse.fromEvent(event, rsvpRepository.countByEventId(event.getId())))
+                .collect(Collectors.toList());
     }
-    
-    public Event getEventById(String eventId) {
-        return eventRepository.findById(eventId)
-            .orElseThrow(() -> new RuntimeException("Event not found with id: " + eventId));
+
+    public EventResponse getEventById(UUID eventId) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new RuntimeException("Event not found"));
+        return EventResponse.fromEvent(event, rsvpRepository.countByEventId(event.getId()));
     }
-    
-    public RSVP rsvpToEvent(String eventId, RSVPRequest request) {
-        // Check if event exists
-        Event event = getEventById(eventId);
-        
-        // Check if user already has RSVP
-        if (rsvpRepository.existsByEventIdAndUserId(eventId, request.getUserId())) {
-            throw new RuntimeException("User already has RSVP for this event");
+
+    @Transactional
+    public EventResponse createEvent(CreateEventRequest request, String organizerEmail) {
+        User organizer = userRepository.findByEmail(organizerEmail)
+                .orElseThrow(() -> new RuntimeException("Organizer not found"));
+
+        Event event = Event.builder()
+                .organizer(organizer)
+                .title(request.getTitle())
+                .description(request.getDescription())
+                .imageUrl(request.getImageUrl())
+                .latitude(request.getLatitude())
+                .longitude(request.getLongitude())
+                .address(request.getAddress())
+                .venueName(request.getVenueName())
+                .startTime(request.getStartTime())
+                .endTime(request.getEndTime())
+                .category(request.getCategory())
+                .isFree(request.getIsFree() != null ? request.getIsFree() : true)
+                .price(request.getPrice())
+                .maxAttendees(request.getMaxAttendees())
+                .build();
+
+        event = eventRepository.save(event);
+        return EventResponse.fromEvent(event, 0L);
+    }
+
+    @Transactional
+    public EventResponse updateEvent(UUID eventId, CreateEventRequest request, String organizerEmail) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new RuntimeException("Event not found"));
+
+        if (!event.getOrganizer().getEmail().equals(organizerEmail)) {
+            throw new RuntimeException("You can only update your own events");
         }
-        
-        // Check if event is full
-        if (event.getMaxAttendees() != null && 
-            event.getCurrentAttendees() >= event.getMaxAttendees()) {
-            throw new RuntimeException("Event is full");
+
+        event.setTitle(request.getTitle());
+        event.setDescription(request.getDescription());
+        event.setImageUrl(request.getImageUrl());
+        event.setLatitude(request.getLatitude());
+        event.setLongitude(request.getLongitude());
+        event.setAddress(request.getAddress());
+        event.setVenueName(request.getVenueName());
+        event.setStartTime(request.getStartTime());
+        event.setEndTime(request.getEndTime());
+        event.setCategory(request.getCategory());
+        event.setIsFree(request.getIsFree());
+        event.setPrice(request.getPrice());
+        event.setMaxAttendees(request.getMaxAttendees());
+
+        event = eventRepository.save(event);
+        return EventResponse.fromEvent(event, rsvpRepository.countByEventId(event.getId()));
+    }
+
+    @Transactional
+    public void deleteEvent(UUID eventId, String organizerEmail) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new RuntimeException("Event not found"));
+
+        if (!event.getOrganizer().getEmail().equals(organizerEmail)) {
+            throw new RuntimeException("You can only delete your own events");
         }
-        
-        // Generate unique QR code
-        String qrCodeData = generateQRCodeData(eventId, request.getUserId());
-        
-        // Create RSVP
-        RSVP rsvp = new RSVP(eventId, request.getUserId(), qrCodeData);
-        if (request.getReminderSettings() != null) {
-            rsvp.setReminderEnabled(request.getReminderSettings().getEnabled());
-            rsvp.setReminderMinutesBefore(request.getReminderSettings().getMinutesBefore());
-        }
-        
-        rsvp = rsvpRepository.save(rsvp);
-        
-        // Update event attendee count
-        event.setCurrentAttendees(event.getCurrentAttendees() + 1);
-        eventRepository.save(event);
-        
-        return rsvp;
+
+        eventRepository.delete(event);
     }
-    
-    public void cancelRSVP(String eventId, String userId) {
-        RSVP rsvp = rsvpRepository.findByEventIdAndUserId(eventId, userId)
-            .orElseThrow(() -> new RuntimeException("RSVP not found"));
-        
-        rsvp.setStatus(RSVPStatus.CANCELLED);
-        rsvpRepository.save(rsvp);
-        
-        // Update event attendee count
-        Event event = getEventById(eventId);
-        event.setCurrentAttendees(Math.max(0, event.getCurrentAttendees() - 1));
-        eventRepository.save(event);
-    }
-    
-    public List<RSVP> getUserRSVPs(String userId) {
-        return rsvpRepository.findByUserIdAndStatus(userId, RSVPStatus.CONFIRMED);
-    }
-    
-    public List<EventCategory> getAllCategories() {
-        return categoryRepository.findAll();
-    }
-    
-    private String generateQRCodeData(String eventId, String userId) {
-        return String.format("%s:%s:%s", eventId, userId, UUID.randomUUID().toString());
+
+    public List<EventResponse> getOrganizerEvents(String organizerEmail) {
+        User organizer = userRepository.findByEmail(organizerEmail)
+                .orElseThrow(() -> new RuntimeException("Organizer not found"));
+
+        return eventRepository.findByOrganizerId(organizer.getId()).stream()
+                .map(event -> EventResponse.fromEvent(event, rsvpRepository.countByEventId(event.getId())))
+                .collect(Collectors.toList());
     }
 }

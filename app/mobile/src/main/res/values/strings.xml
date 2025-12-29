@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Eventory</string>
+    <string name="welcome_title">Welcome to Eventory</string>
+    <string name="welcome_subtitle">Find what\'s happening. Show up. Scan in.</string>
+    <string name="get_started">Get Started</string>
+    <string name="login">Sign In</string>
+    <string name="register">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="full_name">Full Name</string>
+    <string name="discover_events">Discover Events</string>
+    <string name="rsvp_now">RSVP Now</string>
+    <string name="view_ticket">View Ticket</string>
+    <string name="scan_qr">Scan QR</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+</resources>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profile &amp; Saved Events - Eventory</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1337ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101322",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e2130",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hide for cleaner mobile look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111218] dark:text-white transition-colors duration-200">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto shadow-2xl bg-background-light dark:bg-background-dark pb-24">
+<!-- Top App Bar -->
+<div class="sticky top-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors">
+<div class="flex items-center p-4 pb-2 justify-between">
+<!-- Back Button / Ghost -->
+<div class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 cursor-pointer text-gray-800 dark:text-white">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-tight flex-1 text-center">Profile</h2>
+<!-- More Options -->
+<div class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 cursor-pointer text-gray-800 dark:text-white">
+<span class="material-symbols-outlined">more_vert</span>
+</div>
+</div>
+</div>
+<!-- Profile Header -->
+<div class="flex flex-col p-6 items-center">
+<div class="relative mb-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-28 w-28 border-4 border-white dark:border-surface-dark shadow-lg" data-alt="Portrait of Alex Rivera smiling in front of an urban background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuChaL5tDGTrhccFyYCosDMIki7KRQAumJkpsZ-D8s-JGhf8PPi8gH1H8hRXwtU-GfL3YXWOW1dxjv0nl2SlMizCqUt9OKbUj5FE2mAnXtALGv1vkABtgKuMyWAE50bgyY10iObemjv5JfKt-VXJFVIxq610vwOAeI2u8uQizZ79Y1s7Ss3Wiy6DkAJMfm2Z5QB81HDZzzfLfY4iSg1E_VXIs0FMxQHv0gt95P0raH6P0P2obhJqqzVerl2tyXF53HuwNnr0xIUYfto");'>
+</div>
+<div class="absolute bottom-1 right-1 bg-primary text-white p-1.5 rounded-full border-2 border-white dark:border-surface-dark flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-1">
+<p class="text-[22px] font-bold leading-tight tracking-tight text-center dark:text-white">Alex Rivera</p>
+<div class="flex items-center gap-1 text-[#616889] dark:text-gray-400">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<p class="text-sm font-medium">Event Enthusiast • NYC</p>
+</div>
+</div>
+<div class="flex gap-4 mt-6 w-full">
+<div class="flex-1 bg-surface-light dark:bg-surface-dark p-3 rounded-xl shadow-sm text-center border border-gray-100 dark:border-gray-800">
+<p class="text-xl font-bold text-primary">24</p>
+<p class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">Saved</p>
+</div>
+<div class="flex-1 bg-surface-light dark:bg-surface-dark p-3 rounded-xl shadow-sm text-center border border-gray-100 dark:border-gray-800">
+<p class="text-xl font-bold text-primary">12</p>
+<p class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">RSVPs</p>
+</div>
+<div class="flex-1 bg-surface-light dark:bg-surface-dark p-3 rounded-xl shadow-sm text-center border border-gray-100 dark:border-gray-800">
+<p class="text-xl font-bold text-primary">5</p>
+<p class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wide">Past</p>
+</div>
+</div>
+</div>
+<!-- Tabs -->
+<div class="px-4 sticky top-[60px] z-40 bg-background-light dark:bg-background-dark pt-2">
+<div class="flex border-b border-gray-200 dark:border-gray-800 justify-between">
+<button class="flex flex-col items-center justify-center border-b-[3px] border-primary text-primary pb-3 px-4 flex-1 transition-all">
+<p class="text-sm font-bold tracking-wide">Saved</p>
+</button>
+<button class="flex flex-col items-center justify-center border-b-[3px] border-transparent text-[#616889] dark:text-gray-400 hover:text-[#111218] dark:hover:text-white pb-3 px-4 flex-1 transition-all">
+<p class="text-sm font-medium tracking-wide">RSVPs</p>
+</button>
+<button class="flex flex-col items-center justify-center border-b-[3px] border-transparent text-[#616889] dark:text-gray-400 hover:text-[#111218] dark:hover:text-white pb-3 px-4 flex-1 transition-all">
+<p class="text-sm font-medium tracking-wide">Settings</p>
+</button>
+</div>
+</div>
+<!-- Saved Events Content (Active View) -->
+<div class="flex flex-col gap-4 p-4 animate-fade-in">
+<!-- Section Header -->
+<div class="flex justify-between items-end mb-1">
+<h3 class="text-lg font-bold dark:text-white">Upcoming Wishlist</h3>
+<span class="text-xs font-medium text-primary cursor-pointer">View all</span>
+</div>
+<!-- Card 1 -->
+<div class="group flex flex-row-reverse items-stretch justify-between gap-4 rounded-xl bg-surface-light dark:bg-surface-dark p-3 shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow">
+<div class="w-28 h-28 bg-center bg-no-repeat bg-cover rounded-lg shrink-0" data-alt="Jazz musicians playing instruments on a rooftop at sunset" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCe6xpLq1A_WPkHQsEDWI8MKvacnRCI1BlORv9ihdfIFGj0I2KEcC7oseagnWBtqevwIL3lXGnryBmmBCmBSgMliWRAPmGX8ATkR2X0XobKXE3G-shKPCsAn-Dgx8gPA9sxQ-abMWOFdbJ_t44-dzoZt_Z775mq24fTSKJXUeu_h5zpY_X86BCm3ZrITPJlZMk28x22DtOpXYv5uQkXdyc_UX4a8b0CNwPW9lYR99W61eYoAsQSFO-sTvK2FbTbRXd23xlA1Jj0gNM");'>
+<!-- Date Badge on Image -->
+<div class="m-1.5 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-lg flex flex-col items-center justify-center text-center shadow-sm">
+<span class="text-[10px] font-bold text-red-500 uppercase leading-none">Oct</span>
+<span class="text-sm font-bold text-gray-900 leading-none">20</span>
+</div>
+</div>
+<div class="flex flex-col justify-between py-1 flex-1 min-w-0">
+<div>
+<p class="text-[#616889] dark:text-primary text-xs font-bold uppercase tracking-wider mb-1">Music</p>
+<p class="text-[#111218] dark:text-white text-base font-bold leading-tight truncate">Rooftop Jazz Night</p>
+<p class="text-[#616889] dark:text-gray-400 text-sm font-normal mt-1 truncate">The Standard • 8:00 PM</p>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="User" class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-surface-dark" data-alt="User avatar small" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7tuoCtJtrHW2gUpUisPEDh8Lh330TujPA7y8i7HZWsZq7EpYF3TQ7bjAh90tvuGvhVZ-L5QQkbPAv01kYlcpCIB6lDaUu7VHXF3X32zfn_k8Fiw41FtpVqGAqQ5GxCR1I4j0SrP20FRKFknRQ-LZ9OosWKHhkzBfMK0emPjbyS5AcXZqvvezVCVLWtLyuimOUsf2nBiGXQg1DLsFjq0qVN0xEPn9LrJPbY3RGl4GDJkFi2sln6PpzaVVSaYfm895uGGnu2yCwnoY"/>
+<img alt="User" class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-surface-dark" data-alt="User avatar small" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRZ93KUfZ0nlKeZp_eQhYd2JrULKOEjF4uIWzpMbwKNezTQ1LieuGHWYV45KEFCC5JWcLfn46CrdUBnDPfSjz5rqx4zoRQUgX-iZhCMYIS2S5KQu_Uk3oqpG4xBeJ99w8aaIaCtxsdCHd18Bicl2Y-XTE1Le71OYMN3PsyRZe1x8jeHjKWXEFFb801T0Kc_iRWxx-K_N0Cva9du9xMbc-RDaFEC5b7mVocMNUZpdoR4gTVpF3SOFW-AutoUZWDqjzrwXVkP-ye-0Q"/>
+<div class="h-6 w-6 rounded-full bg-gray-100 dark:bg-gray-700 ring-2 ring-white dark:ring-surface-dark flex items-center justify-center text-[8px] font-bold text-gray-500">+12</div>
+</div>
+<button class="bg-primary/10 hover:bg-primary/20 text-primary rounded-full p-2 transition-colors">
+<span class="material-symbols-outlined text-[20px] filled">bookmark</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group flex flex-row-reverse items-stretch justify-between gap-4 rounded-xl bg-surface-light dark:bg-surface-dark p-3 shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow">
+<div class="w-28 h-28 bg-center bg-no-repeat bg-cover rounded-lg shrink-0" data-alt="People talking and holding drinks at a tech networking event" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBW7K_ek2ghasyGEoLeYPF8mBtckmoR0alAoBFOu_l0-2503inb3ZSsXdwM7BsDOV3VrqFQREdcuumP1loHT2PmOrNP4m41Qx3N18jdHWc2PziEEdLZq9CC7U8pgBrTNpVSvxakUvL3V9AcwQ9TvgMcBiLrgLSB9Ae1ji6qy6TC9jlAJwk3lImODCD9a2AXMxzL-okGehy3eO3X4K2YRNFl57QhX-miFQ15AGay6GdU3ybwO9DsB0dPWCCK8CRHOhM6zb83fXtqHb0");'>
+<div class="m-1.5 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-lg flex flex-col items-center justify-center text-center shadow-sm">
+<span class="text-[10px] font-bold text-red-500 uppercase leading-none">Nov</span>
+<span class="text-sm font-bold text-gray-900 leading-none">12</span>
+</div>
+</div>
+<div class="flex flex-col justify-between py-1 flex-1 min-w-0">
+<div>
+<p class="text-[#616889] dark:text-primary text-xs font-bold uppercase tracking-wider mb-1">Networking</p>
+<p class="text-[#111218] dark:text-white text-base font-bold leading-tight truncate">Tech Mixer 2024</p>
+<p class="text-[#616889] dark:text-gray-400 text-sm font-normal mt-1 truncate">Convention Center • 6:30 PM</p>
+</div>
+<div class="flex items-center justify-between mt-2">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="User" class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-surface-dark" data-alt="User avatar small" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVMN-CfcOS5BBny7Y9_rkWqd34JX-2jSUJL-nD3SiPOH6dFo8PvYEadrVyznnxVJfMztt8LvmEuW4HH9xEXlQCGHHKyaeG98dMhpKf_Bx3c7g8tHP_BoVwP8TktlYEBSTDHAKTQwKPgIa8yHTIfpQcBz6y7mdQKmo9J2kdh0_Hb9FwZEP_Tdl7Wk_Bg2IWKmw2JV-j3csLwaFKTrf3TApcUUXso5yOglt3dKvLtmUsQB_HVHOx1SGpdNxIPZN0sDjfSm-amEN875U"/>
+</div>
+<button class="bg-primary/10 hover:bg-primary/20 text-primary rounded-full p-2 transition-colors">
+<span class="material-symbols-outlined text-[20px] filled">bookmark</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group flex flex-row-reverse items-stretch justify-between gap-4 rounded-xl bg-surface-light dark:bg-surface-dark p-3 shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow opacity-60">
+<div class="w-28 h-28 bg-center bg-no-repeat bg-cover rounded-lg shrink-0 grayscale" data-alt="Abstract art gallery exhibition interior" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDHxwA3mLPGLnx7tdcyKCxXpMI7Vq0F4FWNQN_7etB0pANoYqEWPOqqcpxOFZIQtnWTnQw0A0dpEHzUlCIkE-H5Qhpx8yr5k_Hng2hlhATTZoZZnO46GMqjDDrmTZXNFGEpoOCoFQ2DzwPgtoSEQ4hVud9j1Q6soa-FendX6Ct6Mfy7r22QBrsbYAsSZ1Ysm4bq2qT5TMXC3iHb0sQaC9XLLB9ZqMkM6W95AI0rF5urYnLuKLR3BVxoHRLtsmqVS6vsbi1i8ZeBeYo");'>
+</div>
+<div class="flex flex-col justify-between py-1 flex-1 min-w-0">
+<div>
+<p class="text-[#616889] dark:text-gray-500 text-xs font-bold uppercase tracking-wider mb-1">Art</p>
+<p class="text-[#616889] dark:text-gray-400 text-base font-bold leading-tight truncate decoration-slice line-through">Modern Art Expo</p>
+<p class="text-[#616889] dark:text-gray-500 text-sm font-normal mt-1 truncate">Ended • Yesterday</p>
+</div>
+<div class="flex items-center justify-start mt-2">
+<span class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-2 py-1 rounded-md">Past Event</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Settings Tab Preview (Rendered below for design visibility) -->
+<div class="px-4 mt-8 pb-4">
+<div class="flex items-center gap-2 mb-4 opacity-50">
+<div class="h-px bg-gray-300 dark:bg-gray-700 flex-1"></div>
+<span class="text-xs uppercase font-bold text-gray-400 tracking-widest">Settings Tab Content</span>
+<div class="h-px bg-gray-300 dark:bg-gray-700 flex-1"></div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+<!-- Group: Preferences -->
+<div class="p-4 pb-2">
+<p class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Preferences</p>
+<!-- Notification Toggle -->
+<div class="flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-700/50">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</div>
+<span class="text-sm font-semibold">Push Notifications</span>
+</div>
+<button class="w-11 h-6 bg-primary rounded-full relative transition-colors focus:outline-none shadow-inner">
+<div class="absolute top-1 left-1 bg-white w-4 h-4 rounded-full shadow-md transition-transform translate-x-5"></div>
+</button>
+</div>
+<!-- Calendar Sync Toggle -->
+<div class="flex items-center justify-between py-3">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+</div>
+<span class="text-sm font-semibold">Calendar Sync</span>
+</div>
+<button class="w-11 h-6 bg-gray-200 dark:bg-gray-600 rounded-full relative transition-colors focus:outline-none shadow-inner">
+<div class="absolute top-1 left-1 bg-white w-4 h-4 rounded-full shadow-md transition-transform translate-x-0"></div>
+</button>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden mt-4">
+<!-- Group: Account -->
+<div class="p-4 pb-2">
+<p class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Account</p>
+<button class="w-full flex items-center justify-between py-3 border-b border-gray-100 dark:border-gray-700/50 group">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
+<span class="material-symbols-outlined text-[20px]">person</span>
+</div>
+<span class="text-sm font-semibold group-hover:text-primary transition-colors">Edit Profile</span>
+</div>
+<span class="material-symbols-outlined text-gray-400 text-[20px]">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between py-3 group">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded-lg bg-red-50 dark:bg-red-900/10 text-red-500">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+</div>
+<span class="text-sm font-semibold text-red-500">Logout</span>
+</div>
+</button>
+</div>
+</div>
+<p class="text-center text-xs text-gray-400 mt-6">Eventory App v1.2.4</p>
+</div>
+<!-- Bottom Navigation -->
+<div class="fixed bottom-0 w-full max-w-md bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-gray-800 px-6 py-3 flex justify-between items-center z-50">
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[24px]">explore</span>
+<span class="text-[10px] font-medium">Explore</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[24px]">search</span>
+<span class="text-[10px] font-medium">Search</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[24px]">airplane_ticket</span>
+<span class="text-[10px] font-medium">Tickets</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[24px] filled">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</div>
+</div>
+</body></html>
